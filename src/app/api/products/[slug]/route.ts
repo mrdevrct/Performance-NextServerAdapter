@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { API_URL } from "@/config/api";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const revalidate = 3600;
 
 export async function GET(

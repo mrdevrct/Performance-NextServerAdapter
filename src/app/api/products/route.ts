@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { API_URL } from "@/config/api";
 
-export const runtime = "edge"; // اجرای سریع روی Edge Runtime
+export const runtime = "nodejs"; // اجرای سریع روی Edge Runtime
 export const revalidate = 3600; // کش یک‌ساعته (ISR)
 
 export async function GET(req: Request) {
