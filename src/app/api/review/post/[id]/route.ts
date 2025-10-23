@@ -1,14 +1,14 @@
 // api/articles/[id]/route.ts
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { API_URL } from "@/config/api";
 
 export const revalidate = 1800;
 
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> } // 👈 params از نوع Promise است
 ) {
-  const { id } = params;
+  const { id } =await params;
   const endpoint = `${API_URL}/wp-json/custom/v1/post/${id}/review`;
 
   try {

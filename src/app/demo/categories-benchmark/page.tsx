@@ -1,9 +1,28 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Shield, Zap, Globe, Cloud } from "lucide-react"; // lucide-react icons (built-in in Next projects)
+import { Shield, Globe, Cloud } from "lucide-react";
 
-// ✅ تابع تست API
-async function testFetch(label, url, options = {}) {
+// تایپ برای خروجی تابع testFetch
+interface TestResult {
+  label: string;
+  status: number;
+  time: string;
+  cacheHeader: string | null;
+}
+
+// تایپ برای پارامترهای تابع testFetch
+interface TestFetchParams {
+  label: string;
+  url: string;
+  options?: RequestInit;
+}
+
+// تابع تست API
+async function testFetch({
+  label,
+  url,
+  options,
+}: TestFetchParams): Promise<TestResult> {
   const start = performance.now();
   const res = await fetch(url, options);
   const end = performance.now();
@@ -24,38 +43,38 @@ async function testFetch(label, url, options = {}) {
 }
 
 export default function CategoriesBenchmarkDemo() {
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<TestResult[]>([]);
 
   async function runTest() {
-    const testResults = [];
+    const testResults: TestResult[] = [];
 
     // 1️⃣ Server Adapter (Edge)
-    const serverAdapter = await testFetch(
-      "Server Adapter (Edge)",
-      `${process.env.NEXT_PUBLIC_SITE_URL}/api/categories`,
-      { cache: "force-cache" }
-    );
+    const serverAdapter = await testFetch({
+      label: "Server Adapter (Edge)",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/categories`,
+      options: { cache: "force-cache" },
+    });
 
     // 2️⃣ Direct Fetch (WordPress)
-    const direct = await testFetch(
-      "Direct Fetch (WordPress)",
-      `${process.env.NEXT_PUBLIC_API_URL}/productcatapi.php`,
-      { cache: "no-store" }
-    );
+    const direct = await testFetch({
+      label: "Direct Fetch (WordPress)",
+      url: `${process.env.NEXT_PUBLIC_API_URL}/productcatapi.php`,
+      options: { cache: "no-store" },
+    });
 
     // 3️⃣ Direct Fetch (WordPress Cached)
-    const directCache = await testFetch(
-      "Direct Fetch (WordPress Cached)",
-      `${process.env.NEXT_PUBLIC_API_URL}/productcatapi.php`,
-      { cache: "force-cache" }
-    );
+    const directCache = await testFetch({
+      label: "Direct Fetch (WordPress Cached)",
+      url: `${process.env.NEXT_PUBLIC_API_URL}/productcatapi.php`,
+      options: { cache: "force-cache" },
+    });
 
     // 4️⃣ Client Fetch (Browser → Next.js)
-    const client = await testFetch(
-      "Client Fetch (Browser → API)",
-      `/api/categories`,
-      { cache: "no-store" }
-    );
+    const client = await testFetch({
+      label: "Client Fetch (Browser → API)",
+      url: `/api/categories`,
+      options: { cache: "no-store" },
+    });
 
     testResults.push(serverAdapter, direct, directCache, client);
     setResults(testResults);
@@ -67,7 +86,7 @@ export default function CategoriesBenchmarkDemo() {
     runTest();
   }, []);
 
-  const getColor = (label) => {
+  const getColor = (label: string): string => {
     if (label.includes("Server")) return "#22c55e";
     if (label.includes("Cached")) return "#84cc16";
     if (label.includes("Direct")) return "#f59e0b";
@@ -87,8 +106,7 @@ export default function CategoriesBenchmarkDemo() {
         🚀 Categories Benchmark + Explanation
       </h1>
       <p style={{ color: "#555", marginBottom: 24 }}>
-        مقایسه بین{" "}
-        <b>Server Adapter (Edge)</b>، <b>Direct Fetch</b> و{" "}
+        مقایسه بین <b>Server Adapter (Edge)</b>، <b>Direct Fetch</b> و{" "}
         <b>Client Fetch</b> همراه با توضیحات عملکرد.
       </p>
 
@@ -187,7 +205,7 @@ export default function CategoriesBenchmarkDemo() {
                   key={i}
                   title={`${r.label}: ${r.time} ms`}
                   style={{
-                    height: `${Math.min(r.time, 200)}px`,
+                    height: `${Math.min(parseFloat(r.time), 200)}px`,
                     width: "60px",
                     backgroundColor: getColor(r.label),
                     display: "flex",
@@ -236,8 +254,8 @@ export default function CategoriesBenchmarkDemo() {
             Server Adapter (Edge)
           </h3>
           <p style={{ fontSize: 14, color: "#065f46" }}>
-            مرورگر → Next.js Edge → WordPress  
-            بدون CORS و با کش CDN در سراسر دنیا.
+            مرورگر → Next.js Edge → WordPress بدون CORS و با کش CDN در سراسر
+            دنیا.
           </p>
           <ul style={{ fontSize: 13, marginTop: 8, color: "#065f46" }}>
             <li>✅ سریع در حالت Warm Cache</li>
@@ -261,8 +279,8 @@ export default function CategoriesBenchmarkDemo() {
             Direct Fetch (WordPress)
           </h3>
           <p style={{ fontSize: 14, color: "#78350f" }}>
-            مرورگر مستقیماً به سرور وردپرس وصل می‌شود  
-            با CORS و handshake های شبکه.
+            مرورگر مستقیماً به سرور وردپرس وصل می‌شود با CORS و handshake های
+            شبکه.
           </p>
           <ul style={{ fontSize: 13, marginTop: 8, color: "#78350f" }}>
             <li>✅ داده همواره تازه</li>
@@ -286,8 +304,8 @@ export default function CategoriesBenchmarkDemo() {
             Client Fetch (Browser → API)
           </h3>
           <p style={{ fontSize: 14, color: "#1e3a8a" }}>
-            مرورگر از API داخلی نکست استفاده می‌کند  
-            که خودش از وردپرس داده می‌گیرد.
+            مرورگر از API داخلی نکست استفاده می‌کند که خودش از وردپرس داده
+            می‌گیرد.
           </p>
           <ul style={{ fontSize: 13, marginTop: 8, color: "#1e3a8a" }}>
             <li>✅ کنترل کامل در سمت نکست</li>

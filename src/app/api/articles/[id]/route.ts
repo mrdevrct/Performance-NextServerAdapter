@@ -1,35 +1,42 @@
-//api/articles/[id]
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { API_URL } from "@/config/api";
+import { cookies } from "next/headers";
 
-export const revalidate = 1800;
+interface RouteParams {
+  params: Promise<{ id: string }>;
+}
 
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
-  const endpoint = `${API_URL}/wp-json/custom/v1/post/${id}`;
+export async function GET(request: NextRequest, { params }: RouteParams) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(process.env.TOKEN_KEY || "auth_token")?.value;
+
+  const { id } = await params; // 👈 اینجا await اضافه شد
+  const endpoint = `${API_URL}/wp-json/custom/v1/articles/${id}`;
+
+  if (!token) {
+    return NextResponse.json(
+      { success: false, message: "توکن یافت نشد", article: null },
+      { status: 401 }
+    );
+  }
 
   try {
     const res = await fetch(endpoint, {
-      next: { revalidate },
-      cache: "force-cache",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
     });
 
-    if (!res.ok) {
-      return NextResponse.json(
-        { success: false, message: "مقاله یافت نشد" },
-        { status: res.status }
-      );
-    }
-
     const data = await res.json();
-    return NextResponse.json(data, { status: 200 });
+    console.log("API Request:", endpoint);
+
+    return NextResponse.json(data, { status: res.status });
   } catch (error) {
-    console.error("❌ Single Article API Error:", error);
+    console.error(`Get Article ${id} Adapter Error:`, error);
     return NextResponse.json(
-      { success: false, message: "ارتباط با سرور برقرار نشد" },
+      { success: false, message: "ارتباط با سرور برقرار نشد", article: null },
       { status: 500 }
     );
   }

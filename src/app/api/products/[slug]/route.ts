@@ -1,14 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { API_URL } from "@/config/api";
 
 export const runtime = "edge";
 export const revalidate = 3600;
 
 export async function GET(
-  req: Request,
-  { params }: { params: { slug: string } }
+  req: NextRequest,
+  { params }: { params: Promise<{ slug: string }> } // 👈 params از نوع Promise است
 ) {
-  const { slug } = await params;
+  const { slug } = await params; // 👈 باید await شود
+
   const endpoint = `${API_URL}/productapi.php?slug=${encodeURIComponent(slug)}`;
 
   try {
