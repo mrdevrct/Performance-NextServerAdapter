@@ -1,0 +1,169 @@
+/* ===========================
+   🔹 Global Imports
+=========================== */
+@import "tailwindcss";
+
+/* ===========================
+   🔹 Root Variables
+=========================== */
+:root {
+  --color-primary: #6eac8b;
+  --color-primary-dark: #5a8a70;
+  --color-primary-dm: #6eac8b29;
+  --color-yellow-strong: #b58900;
+
+  --font-iran-yekan: "IRANYekanWeb", sans-serif;
+
+  --color-bg-from: #f8faf9;
+  --color-bg-to: #e8f3eb;
+}
+
+/* ===========================
+   🔹 Theme Inline (for Tailwind @theme)
+=========================== */
+@theme inline {
+  --color-primary: var(--color-primary);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-primary-dm: var(--color-primary-dm);
+  --color-yellow-strong: var(--color-yellow-strong);
+
+  --font-iran-yekan: var(--font-iran-yekan);
+  --font-sans: var(--font-iran-yekan);
+
+  --color-bg-from: var(--color-bg-from);
+  --color-bg-to: var(--color-bg-to);
+}
+
+/* ===========================
+   🔹 Base Styles
+=========================== */
+@layer base {
+  html,
+  body {
+    @apply min-h-screen bg-white text-gray-900 font-iran-yekan;
+  }
+
+  body {
+    font-family: var(--font-iran-yekan), sans-serif;
+    background: linear-gradient(
+      135deg,
+      var(--color-bg-from) 0%,
+      var(--color-bg-to) 100%
+    );
+    color: var(--foreground, #111111);
+    overflow-x: hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ===========================
+   🔹 Components & Utilities
+=========================== */
+@layer components {
+  /* Container مرکزی سایت */
+  .app-container {
+    @apply w-full max-w-[1280px] mx-auto px-2;
+  }
+
+  /* مرکز‌چین عمومی */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+}
+
+/* ===========================
+   🔹 Scrollbar Hidden
+=========================== */
+.scrollbar-hide {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===========================
+   🔹 Background Gradients
+=========================== */
+.sidebar-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fffe 50%, #f0fdf4 100%);
+}
+
+.special-carousel {
+  background: linear-gradient(90deg, #6eac8b 0%, #5a8a70 100%);
+}
+
+/* ===========================
+   🔹 Swiper Navigation Buttons
+=========================== */
+.custom-swiper-nav-top {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.swiper-button-prev-custom,
+.swiper-button-next-custom {
+  background: var(--color-primary, #6eac8b);
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 8px rgba(110, 172, 139, 0.25);
+  transition: all 0.3s ease;
+}
+
+.swiper-button-prev-custom:hover,
+.swiper-button-next-custom:hover {
+  background: #5a8a70;
+  transform: scale(1.05);
+}
+
+/* 🔸 Special Nav */
+.special-nav .swiper-button-prev-custom,
+.special-nav .swiper-button-next-custom {
+  background: white !important;
+  color: #6eac8b !important;
+  box-shadow: 0 3px 8px rgba(255, 255, 255, 0.4);
+}
+.special-nav .swiper-button-prev-custom:hover,
+.special-nav .swiper-button-next-custom:hover {
+  background: #f8f8f8 !important;
+}
+
+/* ===========================
+   🔹 Special Offer Box
+=========================== */
+.special-offer-box {
+  background: transparent;
+  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.special-offer-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(110, 172, 139, 0.35);
+}
+
+/* ===========================
+   🔹 Swiper Slide Alignment
+=========================== */
+.swiper-slide {
+  display: flex;
+  align-items: stretch;
+}
+
+/* ===========================
+   🔹 General Layout
+=========================== */
+html,
+body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden !important;
+}
