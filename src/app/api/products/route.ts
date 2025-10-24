@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { API_URL } from "@/config/api";
 
-export const runtime = "nodejs"; // اجرای سریع روی Edge Runtime
+export const runtime = "nodejs"; // اجرای سریع روی nodejs Runtime
 export const revalidate = 3600; // کش یک‌ساعته (ISR)
 
 export async function GET(req: Request) {
@@ -48,11 +48,11 @@ export async function GET(req: Request) {
 
     // افزودن زمان پاسخ برای تست و نمایش در UI
     return NextResponse.json(
-      { ...data, _timing: `${fetchTime} ms (Edge)` },
+      { ...data, _timing: `${fetchTime} ms (nodejs)` },
       {
         status: 200,
         headers: {
-          "x-cache-info": "edge-cache",
+          "x-cache-info": "nodejs-cache",
         },
       }
     );

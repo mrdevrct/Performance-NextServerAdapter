@@ -33,7 +33,7 @@ async function testFetch(
 
 // تابع صفحه به صورت TypeScript
 const Page= async () => {
-  console.log("🚀 شروع تست Edge + Warm Cache Performance");
+  console.log("🚀 شروع تست nodejs + Warm Cache Performance");
 
   // ---------- 1️⃣ Server Adapter (بار اول = cold cache) ----------
   const first = await testFetch(
@@ -61,7 +61,7 @@ const Page= async () => {
 
   return (
     <div style={{ padding: 20, fontFamily: "monospace" }}>
-      <h2>⚡ تست Edge Runtime + Cache (Cold vs Warm)</h2>
+      <h2>⚡ تست nodejs Runtime + Cache (Cold vs Warm)</h2>
       <table style={{ borderCollapse: "collapse", width: "100%" }}>
         <thead>
           <tr style={{ borderBottom: "1px solid #ccc" }}>
@@ -86,13 +86,13 @@ const Page= async () => {
       <hr style={{ margin: "20px 0" }} />
 
       <details>
-        <summary>📦 داده پاسخ (Edge)</summary>
+        <summary>📦 داده پاسخ (nodejs)</summary>
         <pre>{JSON.stringify(results[1].data, null, 2)}</pre>
       </details>
 
       <p style={{ marginTop: 20, color: "#999" }}>
         زمان <b>Cold</b> یعنی بار اول (قبل از کش). زمان <b>Warm</b> یعنی بار دوم
-        (با کش فعال Edge).
+        (با کش فعال nodejs).
       </p>
     </div>
   );

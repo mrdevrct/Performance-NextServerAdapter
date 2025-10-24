@@ -40,9 +40,9 @@ export default function CategoriesPerformanceDemo() {
   async function runTest() {
     const testResults: TestResult[] = [];
 
-    // 1️⃣ Server Adapter (Edge)
+    // 1️⃣ Server Adapter (nodejs)
     const serverAdapter = await testFetch(
-      "Server Adapter (Edge)",
+      "Server Adapter (nodejs)",
       `${process.env.NEXT_PUBLIC_SITE_URL}/api/categories`,
       { cache: "force-cache" }
     );
@@ -97,7 +97,7 @@ export default function CategoriesPerformanceDemo() {
         🚀 Categories Performance Benchmark
       </h1>
       <p style={{ color: "#555", marginBottom: 24 }}>
-        مقایسه بین <b>Server Adapter (Edge)</b>، <b>Direct Fetch (WordPress)</b>{" "}
+        مقایسه بین <b>Server Adapter (nodejs)</b>، <b>Direct Fetch (WordPress)</b>{" "}
         و <b>Client Fetch (Browser → API)</b>
       </p>
 

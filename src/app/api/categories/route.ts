@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { API_URL } from "@/config/api";
 
-export const runtime = "nodejs"; // اجرای سریع‌تر در Edge
+export const runtime = "nodejs"; // اجرای سریع‌تر در nodejs
 export const revalidate = 3600; // کش ۱ ساعته
 
 export async function GET() {
@@ -32,7 +32,7 @@ export async function GET() {
       {
         ...data,
         _meta: {
-          timing: `${fetchTime} ms (Edge)`,
+          timing: `${fetchTime} ms (nodejs)`,
           endpoint,
           cache: "force-cache",
         },
@@ -40,7 +40,7 @@ export async function GET() {
       {
         status: 200,
         headers: {
-          "x-cache-info": "edge-cache",
+          "x-cache-info": "nodejs-cache",
           "x-response-time": `${fetchTime}ms`,
         },
       }

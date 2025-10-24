@@ -48,9 +48,9 @@ export default function CategoriesBenchmarkDemo() {
   async function runTest() {
     const testResults: TestResult[] = [];
 
-    // 1️⃣ Server Adapter (Edge)
+    // 1️⃣ Server Adapter (nodejs)
     const serverAdapter = await testFetch({
-      label: "Server Adapter (Edge)",
+      label: "Server Adapter (nodejs)",
       url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/categories`,
       options: { cache: "force-cache" },
     });
@@ -106,7 +106,7 @@ export default function CategoriesBenchmarkDemo() {
         🚀 Categories Benchmark + Explanation
       </h1>
       <p style={{ color: "#555", marginBottom: 24 }}>
-        مقایسه بین <b>Server Adapter (Edge)</b>، <b>Direct Fetch</b> و{" "}
+        مقایسه بین <b>Server Adapter (nodejs)</b>، <b>Direct Fetch</b> و{" "}
         <b>Client Fetch</b> همراه با توضیحات عملکرد.
       </p>
 
@@ -251,10 +251,10 @@ export default function CategoriesBenchmarkDemo() {
         >
           <Shield color="#16a34a" size={30} />
           <h3 style={{ fontSize: 18, fontWeight: 700, marginTop: 10 }}>
-            Server Adapter (Edge)
+            Server Adapter (nodejs)
           </h3>
           <p style={{ fontSize: 14, color: "#065f46" }}>
-            مرورگر → Next.js Edge → WordPress بدون CORS و با کش CDN در سراسر
+            مرورگر → Next.js nodejs → WordPress بدون CORS و با کش CDN در سراسر
             دنیا.
           </p>
           <ul style={{ fontSize: 13, marginTop: 8, color: "#065f46" }}>

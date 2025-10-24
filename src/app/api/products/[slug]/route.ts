@@ -29,7 +29,7 @@ export async function GET(
 
     return NextResponse.json(
       { success: true, product: data },
-      { status: 200, headers: { "x-cache-info": "edge-cache" } }
+      { status: 200, headers: { "x-cache-info": "nodejs-cache" } }
     );
   } catch (error) {
     console.error("❌ Single Product API Error:", error);

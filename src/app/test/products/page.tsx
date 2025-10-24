@@ -1,12 +1,21 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
+// تعریف تایپ برای محصول
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  // سایر فیلدهای مورد نیاز
+}
+
 // تعریف تایپ برای نتایج تست
 interface TestResult {
   label: string;
   status: number;
   time: string;
   cacheHeader: string;
+  products?: Product[]; // اضافه کردن محصولات به نتیجه
 }
 
 // تابع تست عمومی با تایپ‌ها
@@ -26,11 +35,15 @@ async function testFetch(
     res.headers.get("x-cache-info") ||
     "N/A";
 
+  // دریافت داده‌های JSON از پاسخ
+  const data = await res.json();
+
   return {
     label,
     status: res.status,
     time,
     cacheHeader,
+    products: data.products || data, // فرض بر این است که API محصولات را در قالب products یا مستقیم برمی‌گرداند
   };
 }
 
@@ -40,9 +53,9 @@ const ProductsBenchmarkPage: React.FC = () => {
   async function runTest() {
     const testResults: TestResult[] = [];
 
-    // 1️⃣ Server Adapter (Edge API Route)
+    // 1️⃣ Server Adapter (nodejs API Route)
     const serverAdapter = await testFetch(
-      "Server Adapter (Edge)",
+      "Server Adapter (nodejs)",
       `${process.env.NEXT_PUBLIC_SITE_URL}/api/products?per_page=5`,
       { cache: "force-cache" }
     );
@@ -76,7 +89,7 @@ const ProductsBenchmarkPage: React.FC = () => {
     <div style={{ padding: 20, fontFamily: "monospace" }}>
       <h2>⚡ تست عملکرد محصولات (3 روش مختلف)</h2>
       <p style={{ color: "#888" }}>
-        مقایسه بین Server Adapter (Edge)، Direct Fetch (WordPress) و Client
+        مقایسه بین Server Adapter (nodejs)، Direct Fetch (WordPress) و Client
         Fetch (Browser)
       </p>
 
@@ -95,6 +108,7 @@ const ProductsBenchmarkPage: React.FC = () => {
         🔄 اجرای دوباره تست
       </button>
 
+      {/* جدول بنچمارک */}
       <table
         style={{
           borderCollapse: "collapse",
@@ -122,6 +136,28 @@ const ProductsBenchmarkPage: React.FC = () => {
         </tbody>
       </table>
 
+      {/* نمایش محصولات */}
+      <div style={{ marginTop: 24 }}>
+        <h3>📋 لیست محصولات</h3>
+        {results.map((result, index) => (
+          <div key={index} style={{ marginBottom: 24 }}>
+            <h4>{result.label}</h4>
+            {result.products && result.products.length > 0 ? (
+              <ul>
+                {result.products.map((product) => (
+                  <li key={product.id}>
+                    {product.name} - {product.price} تومان
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>محصولی برای نمایش وجود ندارد.</p>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* نمودار سرعت پاسخ */}
       <div style={{ marginTop: 24 }}>
         <h3>📈 نمودار ساده سرعت پاسخ</h3>
         <div style={{ display: "flex", gap: "10px", alignItems: "flex-end" }}>

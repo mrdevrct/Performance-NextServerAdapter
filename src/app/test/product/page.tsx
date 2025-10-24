@@ -41,9 +41,9 @@ export default function ProductPerformanceDemo() {
   async function runTest() {
     const testResults: TestResult[] = [];
 
-    // 1️⃣ Server Adapter (Edge API)
+    // 1️⃣ Server Adapter (nodejs API)
     const serverAdapter = await testFetch(
-      "Server Adapter (Edge)",
+      "Server Adapter (nodejs)",
       `${process.env.NEXT_PUBLIC_SITE_URL}/api/products/${slug}`,
       { cache: "force-cache" }
     );

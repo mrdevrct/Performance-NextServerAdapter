@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { API_URL } from "@/config/api";
 
-export const runtime = "nodejs";        // اجرا روی Edge
+export const runtime = "nodejs";        // اجرا روی nodejs
 export const revalidate = 3600;       // کش یک‌ساعته (ISR برای ۱ ساعت)
 
 export async function GET() {
@@ -27,8 +27,8 @@ export async function GET() {
     const data = await res.json();
 
     return NextResponse.json(
-      { ...data, _timing: `${fetchTime} ms (Edge)` },
-      { status: 200, headers: { "x-cache-info": "edge-cache" } }
+      { ...data, _timing: `${fetchTime} ms (nodejs)` },
+      { status: 200, headers: { "x-cache-info": "nodejs-cache" } }
     );
   } catch (error) {
     console.error("❌ Tag API Error:", error);
