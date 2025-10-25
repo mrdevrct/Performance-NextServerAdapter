@@ -5,7 +5,7 @@ export const runtime = "nodejs"; // اجرای سریع‌تر در nodejs
 export const revalidate = 3600; // کش ۱ ساعته
 
 export async function GET() {
-  const endpoint = `${API_URL}/productcatapi.php`;
+  const endpoint = `https://omdehforoosh.com/productcatapi.php`;
 
   const start = performance.now();
 

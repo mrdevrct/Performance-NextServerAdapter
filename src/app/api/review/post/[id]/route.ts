@@ -9,7 +9,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> } // 👈 params از نوع Promise است
 ) {
   const { id } =await params;
-  const endpoint = `${API_URL}/wp-json/custom/v1/post/${id}/review`;
+  const endpoint = `https://omdehforoosh.com/wp-json/custom/v1/post/${id}/review`;
 
   try {
     const res = await fetch(endpoint, {

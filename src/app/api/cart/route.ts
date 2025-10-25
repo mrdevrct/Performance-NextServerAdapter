@@ -5,7 +5,7 @@ import { API_URL } from "@/config/api";
 export async function GET() {
   const cookieStore = await cookies(); 
   const token = cookieStore.get(process.env.TOKEN_KEY || "jwt_token")?.value;
-  const endpoint = `${API_URL}/wp-json/custom/v1/cart`;
+  const endpoint = `https://omdehforoosh.com/wp-json/custom/v1/cart`;
 
   try {
     const res = await fetch(endpoint, {

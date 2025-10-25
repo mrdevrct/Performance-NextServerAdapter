@@ -11,7 +11,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   const token = cookieStore.get(process.env.TOKEN_KEY || "auth_token")?.value;
 
   const { id } = await params; // 👈 اینجا await اضافه شد
-  const endpoint = `${API_URL}/wp-json/custom/v1/articles/${id}`;
+  const endpoint = `https://omdehforoosh.com/wp-json/custom/v1/articles/${id}`;
 
   if (!token) {
     return NextResponse.json(

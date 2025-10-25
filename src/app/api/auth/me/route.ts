@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 export async function GET() {
   const cookieStore = await cookies(); 
   const token = cookieStore.get(process.env.TOKEN_KEY || "jwt_token")?.value;
-  const endpoint = `${API_URL}/wp-json/custom/v1/me`;
+  const endpoint = `https://omdehforoosh.com/wp-json/custom/v1/me`;
 
   if (!token) {
     return NextResponse.json(

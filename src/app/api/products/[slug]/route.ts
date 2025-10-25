@@ -10,7 +10,7 @@ export async function GET(
 ) {
   const { slug } = await params; // 👈 باید await شود
 
-  const endpoint = `${API_URL}/productapi.php?slug=${encodeURIComponent(slug)}`;
+  const endpoint = `https://omdehforoosh.com/productapi.php?slug=${encodeURIComponent(slug)}`;
 
   try {
     const res = await fetch(endpoint, {

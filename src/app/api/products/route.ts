@@ -18,7 +18,7 @@ export async function GET(req: Request) {
   const min_price = searchParams.get("min_price") || "";
 
   // ساخت endpoint نهایی
-  const endpoint = `${API_URL}/productsapi.php?per_page=${per_page}${
+  const endpoint = `https://omdehforoosh.com/productsapi.php?per_page=${per_page}${
     category ? `&category=${category}` : ""
   }${type ? `&type=${type}` : ""}${tag ? `&tag=${tag}` : ""}${
     count ? `&count=${count}` : ""

@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   const page = searchParams.get("page") || "1";
   const category = searchParams.get("category") || "";
 
-  const endpoint = `${API_URL}/wp-json/custom/v1/posts?per_page=${per_page}&page=${page}${
+  const endpoint = `https://omdehforoosh.com/wp-json/custom/v1/posts?per_page=${per_page}&page=${page}${
     category ? `&category=${category}` : ""
   }`;
 

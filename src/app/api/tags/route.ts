@@ -5,7 +5,7 @@ export const runtime = "nodejs";        // اجرا روی nodejs
 export const revalidate = 3600;       // کش یک‌ساعته (ISR برای ۱ ساعت)
 
 export async function GET() {
-  const endpoint = `${API_URL}/producttagapi.php`;
+  const endpoint = `https://omdehforoosh.com/producttagapi.php`;
   const start = performance.now();
 
   try {

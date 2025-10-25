@@ -3,7 +3,7 @@ import { API_URL } from "@/config/api";
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const endpoint = `${API_URL}/wp-json/custom/v1/otp/request`;
+  const endpoint = `https://omdehforoosh.com/wp-json/custom/v1/otp/request`;
 
   try {
     const res = await fetch(endpoint, {
